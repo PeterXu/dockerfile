@@ -1,0 +1,12 @@
+expand-hosts
+domain=zenvv.com
+cache-size=150
+#no-resolv
+domain-needed
+
+# for other servers
+server=/consul./127.0.0.1#8600
+
+# for common
+address=/lark.io/192.168.0.1
+address=/vip.zenvv.com/192.168.0.2

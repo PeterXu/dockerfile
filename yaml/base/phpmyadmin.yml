@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  # from phpmyadmin/phpmyadmin
+  phpmyadmin:
+    image: "lark.io/phpmyadmin:stable"
+    restart: always
+    network_mode: host # host/default
+    #ports:
+    #    - 8080
+    #links:
+    #    - mysql:db
+    environment:
+        - dbHost=127.0.0.1
+        - listenPort=8080
+

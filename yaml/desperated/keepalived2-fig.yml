@@ -1,0 +1,13 @@
+keepalived2:
+    extends:
+        file: ../base/keepalived.yml
+        service: keepalived
+    restart: always
+    environment:
+        - vrrpId=91
+        - vrrpState=BACKUP
+        - vrrpInt1=eth1
+        - vrrpInt2=eth0
+        - vrrpPri=99
+        - vrrpAddr=10.11.200.9/24 dev eth0
+

@@ -1,0 +1,20 @@
+glusterd_data:
+    image: lark.io/glusterfs:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    volumes:
+        - /opt/glusterd_root/log:/usr/var/log/glusterfs
+        - /opt/glusterd_root/data:/usr/var/lib/glusterd
+        - /mnt/brick1:/mnt/brick1
+        - ~/.ssh:/root/.rssh
+    command:
+        - data
+
+glusterd:
+    image: lark.io/glusterfs:stable
+    restart: always
+    net: host
+    privileged: true
+    volumes_from:
+        - glusterd_data

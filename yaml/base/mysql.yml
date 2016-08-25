@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  # from mysql
+  mysql:
+    image: "lark.io/mysql:stable"
+    restart: always
+    network_mode: host # host/default
+    #ports:
+    #    - 3306
+    environment:
+        #- MYSQL_ROLE=slave
+        #- MYSQL_PORT=3306
+        - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+        #- MYSQL_USER=db_user
+        #- MYSQL_PASSWORD=db_pass
+        #- MYSQL_DATABASE=db_name
+    volumes:
+        - /opt/mysql_root/conf:/etc/mysql/conf.d
+        - /opt/mysql_root/log:/var/log/mysql
+        - /opt/mysql_root/data:/var/lib/mysql
+

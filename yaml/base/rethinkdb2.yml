@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  # from rethinkdb
+  rethinkdb:
+    image: lark.io/rethinkdb:lts
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: host
+    volumes:
+        - /opt/rethinkdb_root/data:/data
+

@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  samba:
+    extends:
+        file: base/samba.yml
+        service: samba
+    volumes:
+        - /mnt/share/samba_data:/mount
+    command:
+        - -s 
+        - public;/mount/share;yes;no;yes;all

@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  soccerpro:
+    extends:
+        file: app.yml
+        service: soccerpro
+

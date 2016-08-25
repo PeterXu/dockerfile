@@ -1,0 +1,9 @@
+etcd:
+  image: lark.io/etcd:lts
+  net: host
+  #ports: [ "4001:4001", "7001:7001" ]
+  command: >
+    --listen-client-urls 'http://0.0.0.0:4001'
+    --advertise-client-urls 'http://dns.io:4001'
+    --initial-cluster-state new
+

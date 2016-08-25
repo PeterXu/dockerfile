@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  elastic:
+    extends:
+        file: base/elastic.yml
+        service: elasticsearch
+    environment:
+        - clusterName=es-cluster
+        - use_readonlyrest=yes
+        #- clusterHosts=host1,host2
+    volumes:
+        - /mnt/share/elastic_root/data:/usr/share/elasticsearch/data
+        - /mnt/share/elastic_root/logs:/usr/share/elasticsearch/logs
+        

@@ -1,0 +1,7 @@
+{
+    "ID": "id2",
+    "Name": "simple",
+    "Address": "127.0.0.1",
+    "Port": 8002,
+    "tags": ["slave"]
+}

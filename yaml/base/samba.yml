@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  # from dperson/samba
+  samba:
+    image: lark.io/samba:stable
+    restart: always
+    network_mode: host
+    #ports:
+    #    - 139:139
+    #    - 445:445
+    volumes:
+        - /opt/samba_root/data:/mount
+    command:
+        - -s 
+        - public;/mount/share;yes;no;yes;all
+

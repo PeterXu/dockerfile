@@ -1,0 +1,11 @@
+nginxcgi1:
+    extends:
+        file: ../base/nginxcgi.yml
+        service: nginxcgi
+    environment:
+        - configNginx=no
+    volumes:
+        - /opt/nginxcgi1_root/certs:/etc/certs.d
+        - /opt/nginxcgi1_root/conf:/etc/nginx/sites-enabled
+        - /opt/nginxcgi1_root/log:/var/log/nginx
+

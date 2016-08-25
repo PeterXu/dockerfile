@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  # export DISC="consul://dns.io:8500/swarm"
+  swarm-manager:
+    extends: 
+        file: base/swarm.yml
+        service: swarm
+    ports:
+        - 3375:3375
+    entrypoint:
+    - bash
+    - -xc
+    - >
+        DISC=${DISC} && DISC=$${DISC:-consul://dns.io:8500/swarm} &&
+        /swarm manage --host tcp://0.0.0.0:3375 --heartbeat "90s" $${DISC}
+

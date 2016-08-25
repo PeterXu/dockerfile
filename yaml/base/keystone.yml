@@ -1,0 +1,16 @@
+keystone:
+    image: lark.io/keystone:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    net: host
+    #ports:
+    #    - 5000:5000 
+    #    - 35357:35357
+    environment:
+        - OS_TENANT_NAME=admin
+        - OS_USERNAME=admin
+        - OS_PASSWORD=passwd
+        - MYSQL_ROOT_PASSWORD=dbpass
+        - MYSQL_HOST=127.0.0.1
+

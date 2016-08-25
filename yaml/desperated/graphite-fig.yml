@@ -1,0 +1,11 @@
+graphite:
+    extends:
+        file: base/graphite.yml
+        service: graphite
+    net: default
+    ports:
+        - 80:80
+        - 2003:2003
+    volumes:
+        - /mnt/nshare/graphite/storage_whisper:/opt/graphite/storage/whisper 
+

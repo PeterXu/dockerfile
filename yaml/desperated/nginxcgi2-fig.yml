@@ -1,0 +1,14 @@
+nginxcgi2:
+    extends:
+        file: ../base/nginxcgi.yml
+        service: nginxcgi
+    environment:
+        - configNginx=yes
+        - consulConfig=consul2.cfg
+    volumes:
+        - /opt/nginxcgi2_root/certs:/etc/certs.d
+        - /opt/nginxcgi2_root/conf:/etc/nginx/sites-enabled
+        - /opt/nginxcgi2_root/log:/var/log/nginx
+        - /opt/nginxcgi2_root/consul_conf:/etc/consul
+        - /opt/nginxcgi2_root/supervisor_log:/var/log/supervisor
+

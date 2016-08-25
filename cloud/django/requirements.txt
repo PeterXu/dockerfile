@@ -1,0 +1,63 @@
+pytz
+celery # task queue/aysnc
+django==1.9
+
+
+## base
+djangorestframework # REST api
+django-tagging
+django-filter
+django-celery 
+easy_thumbnails
+markdown
+south # db table update, now use manage.py migrate
+
+
+## user/auth/perm/admin
+django-user-accounts # contain email confirm
+django-mailer
+django-bookmarks
+django-flag
+#django-friends
+#django-announcements 
+#django-permissions
+#django-signup 
+#django-registration
+#django-authopenid
+#django-qrauth 
+#django-geo 
+#django-timezones
+#django-admin-tools 
+#djnago-fluent-dashboard
+
+
+## media/content
+#django-dynamic-media-serve  # ddms
+#django-photologue 
+#image
+#django-event-calendar 
+#django-voting
+#django-dynamic-link
+#django-staticmedia
+
+
+django-viewflow
+#django-avatar
+#django-notification
+#django-pagination
+#django-locations
+#django-oembed # embed image/video link
+#django-material
+#django-reversion
+#kss.django
+
+
+#reviewboard
+#django-db-log
+#LFS(Lightning Fast Shop)
+#Satchmo(shopping)
+#goflow
+#pinax 
+#wechat
+#wechat-sdk
+

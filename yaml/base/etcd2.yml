@@ -1,0 +1,32 @@
+# from quay.io/coreos/etcd
+#   etcd client API over ports 4001 and 2379
+#   peer port over 2380
+#   etcdctl -C http://192.168.10.1:2379 member list
+#   etcdctl -C http://192.168.10.1:4001 member list
+etcd:
+    image: lark.io/etcd:lts
+    hostname: etcd
+    restart: always
+    net: host
+    #ports:
+    #    - 4001
+    #    - 2379
+    #    - 2380
+    command:
+        - -name
+        - etcd0
+        - -advertise-client-urls                    # r
+        - http://0.0.0.0:2379,http://0.0.0.0:4001   # r
+        - -listen-client-urls                       # r
+        - http://0.0.0.0:2379,http://0.0.0.0:4001   # r
+        - -initial-advertise-peer-urls 
+        - http://0.0.0.0:2380
+        - -listen-peer-urls
+        - http://0.0.0.0:2380
+        - -initial-cluster-token 
+        - etcd-cluster-1
+        - -initial-cluster 
+        - etcd0=http://0.0.0.0:2380
+        - -initial-cluster-state                    # r
+        - new                                       # r
+

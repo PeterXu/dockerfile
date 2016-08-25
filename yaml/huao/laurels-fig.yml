@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  laurels:
+    extends:
+        file: app.yml
+        service: laurels
+

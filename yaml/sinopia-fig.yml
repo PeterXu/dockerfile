@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  # /sinopia/config.yaml:
+  sinopia:
+    image: lark.io/rnbwd/sinopia:lts
+    ports:
+        - 4873:4873
+    volumes:
+        - /mnt/share/sinopia_root/data:/sinopia/storage
+

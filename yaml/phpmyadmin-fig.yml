@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  phpmyadmin:
+    extends:
+        file: base/phpmyadmin.yml
+        service: phpmyadmin
+    environment:
+        - dbHost=127.0.0.1
+        - listenPort=9090
+

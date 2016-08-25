@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  dnsmasq:
+    extends:
+        file: base/dnsmasq.yml
+        service: dnsmasq
+

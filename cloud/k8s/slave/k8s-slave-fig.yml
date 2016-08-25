@@ -1,0 +1,31 @@
+# links: etcd && mesosmaster && apiserver
+mesosslave:
+  privileged: true
+  image: lark.io/mesosphere/mesos-slave-dind:lts
+  net: host
+  #ports: [ "10248","10249" ]
+  entrypoint:
+  - bash
+  - "-xc"
+  - >
+    N=2 &&
+    PUBLIC_RESOURCES="$$(if [ $${N} = 2 ]; then echo ";cpus(public):2;mem(public):640;ports(public):[7000-7999]"; fi)" &&
+    DOCKER_NETWORK_OFFSET=0.0.$${N}.0
+    exec mesos-slave
+    --work_dir="/var/tmp/mesos/$${N}"
+    --attributes="rack:$${N};gen:201$${N}"
+    --hostname=$$(hostname)
+    --resources="cpus:4;mem:1280;disk:25600;ports:[8000-21099]$${PUBLIC_RESOURCES}"
+  command: []
+  environment:
+    - MESOS_MASTER=k8s.io:5050
+    - MESOS_PORT=5051
+    - MESOS_LOG_DIR=/var/log/mesos
+    - MESOS_LOGGING_LEVEL=INFO
+    - MESOS_SWITCH_USER=0
+    - MESOS_CONTAINERIZERS=docker,mesos
+    - MESOS_ISOLATION=cgroups/cpu,cgroups/mem
+    - VAR_LIB_DOCKER_SIZE=10
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+

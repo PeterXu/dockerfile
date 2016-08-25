@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  jenkins:
+    extends:
+        file: base/jenkins.yml
+        service: jenkins
+    volumes:
+        - /mnt/share/jenkins_home:/var/jenkins_home

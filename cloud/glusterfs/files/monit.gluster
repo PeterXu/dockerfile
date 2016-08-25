@@ -1,0 +1,6 @@
+check process glusterd with pidfile /var/run/glusterd.pid
+    start program = "/etc/init.d/glusterdctl start"
+    stop program = "/etc/init.d/glusterdctl stop"
+    # if cpu usage > 95% for 10 cycles then restart
+    if 5 restarts with 5 cycles then timeout
+

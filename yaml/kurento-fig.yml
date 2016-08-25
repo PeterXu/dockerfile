@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  # check: curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Host: 127.0.0.1:8888" -H "Origin: 127.0.0.1" http://127.0.0.1:8888/kurento
+  kurento-media-server:
+    image: lark.io/kurento-media-server:stable
+    stdin_open: true
+    tty: true
+    network_mode: host
+    #ports:
+    #    - 8888:8888
+    environment:
+        - GST_DEBUG=Kurento*:5
+        #- COTURN_PORT_3478_TCP_ADDR=127.0.0.1
+        #- COTURN_PORT_3478_TCP_PORT=3478
+    #command:
+    #    - --help
+

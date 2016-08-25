@@ -1,0 +1,13 @@
+watcher.actions.email.service.account:
+    work:
+        profile: <gmail>
+        email_defaults:
+            from: <email>
+            smtp:
+                auth: true
+                starttls.enable: true
+                host: <smtp>
+                port: 587
+                user: <user> 
+                password: <pass> 
+

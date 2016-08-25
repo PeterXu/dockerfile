@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  # from redis
+  redis:
+    image: lark.io/redis:lts
+    restart: always
+    ports:
+        - 6379:6379
+    volumes:
+        - /opt/redis_root/log:/var/log/redis
+        - /opt/redis_root/data:/var/lib/redis
+

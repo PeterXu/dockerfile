@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  # from swarm
+  swarm:
+    image: lark.io/swarm:stable
+    restart: always
+    network_mode: default
+    command:
+        - manage
+        - --host 
+        - tcp://0.0.0.0:3375
+        #- etcd://127.0.0.1:4001
+        - consul://127.0.0.1:8500/swarm
+

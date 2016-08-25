@@ -1,0 +1,10 @@
+graphite:
+    image: lark.io/graphite:stable
+    restart: always
+    net: host
+    #ports:
+    #    - 80
+    #    - 2003
+    volumes:
+        - /opt/graphite_root/storage_whisper:/opt/graphite/storage/whisper 
+

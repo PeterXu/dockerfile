@@ -1,0 +1,11 @@
+# from bittorrent/sync
+btsync:
+    image: lark.io/btsync:latest
+    restart: always
+    net: host
+    #ports:
+    #    - 8888
+    #    - 55555
+    volumes:
+        - /opt/btsync_root/data:/mnt/sync
+

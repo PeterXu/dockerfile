@@ -1,0 +1,22 @@
+readonlyrest:
+    enable: true
+    response_if_req_forbidden: <h1>Sorry, your request is forbidden.</h1>
+    access_control_rules:
+
+    - name: Administrator login
+      type: allow
+      auth_key: admin:pass521
+
+    - name: Accept all requests from localhost
+      type: allow
+      hosts: [127.0.0.1]
+
+    - name: Accept only GETs from other hosts
+      type: allow
+      methods: [GET]
+
+    - name: Accept only GETs with empty body from other host
+      type: allow
+      methods: [GET]
+      maxBodyLength: 0
+      indices: [index1, index2]

@@ -1,0 +1,56 @@
+global
+    log 127.0.0.1   local0
+    maxconn 4096
+    user haproxy
+    group haproxy
+
+defaults
+    log     global
+    mode    http
+    option  dontlognull
+    retries 3
+    option redispatch
+    timeout connect 5s
+    timeout client 50s
+    timeout server 50s
+    balance  roundrobin
+
+
+# Set up application listeners here.
+frontend http
+    maxconn {{key "service/haproxy/maxconn"}}
+    bind 0.0.0.0:80
+    default_backend servers-http-varnish
+
+backend servers-http-varnish
+    balance            roundrobin
+    option httpchk GET /
+    option httplog
+
+    {{range service "primary.varnish"}}
+    server {{.Node}} {{.Address}}:{{.Port}} weight 1 check port {{.Port}}
+    {{end}}
+
+    {{range service "backup.varnish"}}
+    server {{.Node}} {{.Address}}:{{.Port}} backup weight 1 check port {{.Port}}
+    {{end}}
+
+frontend https
+    maxconn            {{key "service/haproxy/maxconn"}}
+    mode               tcp
+    bind               0.0.0.0:443
+    default_backend    servers-https
+
+backend servers-https
+    mode               tcp
+    option             tcplog
+    balance            roundrobin
+
+    {{range service "primary.ssl"}}
+    server {{.Node}} {{.Address}}:{{.Port}} weight 1 check port {{.Port}}
+    {{end}}
+
+    {{range service "backup.ssl"}}
+    server {{.Node}} {{.Address}}:{{.Port}} backup weight 1 check port {{.Port}}
+    {{end}}
+

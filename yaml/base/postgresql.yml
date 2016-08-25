@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  # from sameersbn/postgresql
+  postgresql:
+    restart: always
+    image: lark.io/postgresql:stable
+    network_mode: host
+    #ports:
+    #    - 5432
+    environment:
+        - DB_USER=db_user
+        - DB_PASS=db_pass
+        - DB_NAME=db_name
+    volumes:
+        - /opt/postgresql_root/log:/var/log/postgresql
+        - /opt/postgresql_root/run:/run/postgresql
+        - /opt/postgresql_root/data:/var/lib/postgresql
+

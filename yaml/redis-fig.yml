@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  redis:
+    extends:
+        file: base/redis.yml
+        service: redis
+    volumes:
+        - /mnt/share/redis_data:/var/lib/redis
+

@@ -1,0 +1,25 @@
+cluster.name: es_cluster
+node.name: ${HOSTNAME}
+node.master: true
+node.data: true
+index.refresh_interval: 3s
+
+# network
+network.host: 0.0.0.0
+network.bind_host: 0.0.0.0
+network.publish_host: 0.0.0.0
+
+# http service
+http.compression: true
+http.compression_level: 3
+
+# internal communication between nodes
+transport.tcp.compress: true
+
+# zen
+discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping_interval: 3s
+discovery.zen.ping_timeout: 30s
+discovery.zen.ping_retries: 5
+#discovery.zen.ping.unicast.hosts: "localhost:9300", "localhost1:9300"
+

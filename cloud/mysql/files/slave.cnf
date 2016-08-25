@@ -1,0 +1,10 @@
+[mysqld]
+server_id          = 1020
+log_bin            = mysql-bin
+binlog_format      = ROW
+relay_log          = mysql-relay-bin
+log_slave_updates  = 1
+read_only          = 1
+slave-skip-errors  = 1062,1053,1146
+#slave-skip-errors  = all
+

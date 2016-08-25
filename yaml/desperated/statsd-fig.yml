@@ -1,0 +1,12 @@
+statsd:
+    extends:
+        file: base/statsd.yml
+        service: statsd
+    net: default
+    ports:
+        - 8125:8125/udp
+        - 8126:8126/tcp
+    environment:
+        - graphiteHost=mon.io
+        - flushInterval=1000
+

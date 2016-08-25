@@ -1,0 +1,18 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /opt/k8s_root/kubernetes/auth/root-ca.crt
+    server: http://k8s.io:8888
+  name: mesos/docker
+contexts:
+- context:
+    cluster: mesos/docker
+    user: cluster-admin
+  name: mesos/docker
+current-context: mesos/docker
+kind: Config
+preferences: {}
+users:
+- name: cluster-admin
+  user:
+    token: b0fdafdb3de173825648e7f433933c4e894ca007922057b28d2602f052571ecb

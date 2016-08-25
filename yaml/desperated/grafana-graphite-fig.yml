@@ -1,0 +1,9 @@
+grafana_graphite:
+    image: lark.io/grafana_graphite:stable
+    restart: always
+    #net: host
+    ports:
+        - 80:80
+        - 8125:8125/udp
+        - 8126:8126
+

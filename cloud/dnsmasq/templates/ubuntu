@@ -1,0 +1,21 @@
+FROM lark.io/ubuntu:lts
+MAINTAINER Peter <peter@uskee.org>
+LABEL "org.uskee.vendor"="ZENVV"
+
+
+ADD sources.list /etc/apt/
+RUN apt-get update
+RUN apt-get install -y dnsmasq supervisor
+RUN apt-get clean
+
+
+ADD files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD files/dnsmasq.conf /etc/dnsmasq.conf
+
+
+ADD docker-entrypoint.sh /entrypoint.sh
+VOLUME ["/var/log/supervisor"]
+VOLUME ["/var/lib/dnsmasq_data"]
+EXPOSE 53
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/usr/bin/supervisord"]

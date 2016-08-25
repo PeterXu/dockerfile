@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  nginx:
+    image: lark.io/nginx:rtmp
+    restart: always
+    network_mode: default
+    ports:
+        - 80:80
+        - 8080:8080
+        - 1935:1935
+        - 1936:1936
+    volumes:
+        - /opt/nginx_root/log:/var/log/nginx
+        - /var/www/rtmp:/var/www/rtmp
+        - /var/www/vod:/var/www/vod
+    tmpfs:
+        - /run
+        - /tmp
+

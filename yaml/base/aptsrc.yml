@@ -1,0 +1,8 @@
+aptsrc:
+    image: lark.io/aptsrc:stable
+    restart: always
+    net: host
+    #ports:
+    #    - 80
+    volumes:
+        - /opt/aptsrc_root/data:/var/spool/apt-mirror

@@ -1,0 +1,20 @@
+# ldapsearch -x -h localhost -b dc=ldap,dc=io -D "cn=admin,dc=ldap,dc=io" -w pass [-ZZ]
+# ldapadd -x -D "cn=admin,dc=ldap,dc=io" -w pass -f /container/service/slapd/assets/test/new-user.ldif -h ldap.io [-ZZ]
+openldap:
+    extends:
+        file: base/openldap.yml
+        service: openldap
+    hostname: ldap.io
+    net: default
+    ports:
+        - 389:389
+        - 636:636
+    environment:
+        - LDAP_ORGANISATION=lark inc
+        - LDAP_DOMAIN=ldap.io
+        - LDAP_ADMIN_PASSWORD=pass
+        - LDAP_TLS=true
+    volumes:
+        - /mnt/share/slapd_root/data:/var/lib/ldap
+        - /mnt/share/slapd_root/conf:/etc/ldap/slapd.d
+

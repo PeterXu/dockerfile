@@ -1,0 +1,16 @@
+datalog:
+    image: lark.io/ddagent:stable
+    hostname: xdev
+    ports:
+        - 8125:8125/udp
+    environment:
+        - API_KEY=ebe4dae08180b3da1c7764fcf797376b
+        - DD_URL=http://mon.io
+        - STATSD_FORWARD_HOST=mon.io
+        - STATSD_METRIC_NAMESPACE=lark
+    volumes:
+        - /var/lib/dd-agent/conf.d:/conf.d
+        - /var/lib/dd-agent/checks.d:/checks.d
+        - /var/run/docker.sock:/var/run/docker.sock 
+        - /proc/:/host/proc/:ro 
+        - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro

@@ -1,0 +1,7 @@
+registrator:
+    extends:
+        file: base/registrator.yml
+        service: registrator
+    command:
+        - consul://consul0.uio:8500
+

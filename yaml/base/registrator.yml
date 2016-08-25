@@ -1,0 +1,10 @@
+# from gliderlabs/registrator
+registrator:
+    image: lark.io/registrator:lts
+    restart: always
+    net: host
+    volumes:
+        - /var/run/docker.sock:/tmp/docker.sock
+    command:
+        - consul://localhost:8500
+

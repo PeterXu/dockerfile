@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  swarm-manager:
+    extends: 
+        file: base/swarm.yml
+        service: swarm
+    network_mode: default
+    command:
+        - manage
+        - --host 
+        - tcp://0.0.0.0:3375
+        - consul://dns.io:8500/swarm
+
+  # datastore
+  rethinkdb:
+    extends:
+        file: base/rethinkdb2.yml
+        service: rethinkdb
+    network_mode: default
+    volumes:
+        - /mnt/share/rethinkdb_data:/data
+
+  # controller
+  shipyard:
+    image: lark.io/shipyard:stable
+    restart: always
+    network_mode: default
+    ports:
+        - 8080:8080
+    links:
+        - rethinkdb:rethinkdb
+        - swarm-manager:swarm
+    command:
+        - server 
+        - -d 
+        - tcp://swarm:3375
+

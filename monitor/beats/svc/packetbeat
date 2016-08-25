@@ -1,0 +1,4 @@
+check process packetbeat matching "/usr/bin/packetbeat"
+    start program "/usr/bin/packetbeat -c /etc/beats/packetbeat.yml"
+    stop program "/usr/bin/pkill packetbeat"
+    if cpu usage > 95% for 10 cycles then restart

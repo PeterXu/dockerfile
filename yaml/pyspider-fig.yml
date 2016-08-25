@@ -1,0 +1,75 @@
+version: '2'
+
+services:
+  mysql:
+    extends:
+        file: base/mysql.yml
+        service: mysql
+    network_mode: default
+
+  rabbitmq:
+    extends:
+        file: base/rabbitmq.yml
+        service: rabbitmq
+    network_mode: default
+
+  phantomjs:
+    image: lark.io/pyspider:stable
+    restart: always
+    command:
+        - phantomjs
+
+
+#=================================
+
+  result_worker:
+    image: lark.io/pyspider:stable
+    links:
+        - mysql:mysql
+        - rabbitmq:rabbitmq
+    command:
+        - result_worker
+
+  # multiple instance if needed
+  processor:
+    image: lark.io/pyspider:stable
+    links:
+        - mysql:mysql
+        - rabbitmq:rabbitmq
+    command:
+        - processor
+
+  # multiple instance if needed
+  fetcher:
+    image: lark.io/pyspider:stable
+    links:
+        - rabbitmq:rabbitmq
+        - phantomjs:phantomjs
+    command:
+        - fetcher
+        - --no-xmlrpc
+
+  # depends on mysql & rabbitmq
+  scheduler:
+    image: lark.io/pyspider:stable
+    links:
+        - mysql:mysql
+        - rabbitmq:rabbitmq
+    command:
+        - scheduler
+
+
+#=================================
+
+  webui:
+    image: lark.io/pyspider:stable
+    ports:
+        - 5000:5000
+    links:
+        - mysql:mysql
+        - rabbitmq:rabbitmq
+        - phantomjs:phantomjs
+        - scheduler:scheduler
+    command:
+        - webui
+

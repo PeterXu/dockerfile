@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  coturn:
+    image: lark.io/coturn:stable
+    stdin_open: true
+    tty: true
+    network_mode: host
+    #ports:
+    #    - 3478:3478
+    #    - 3479:3479
+    #    - 5766:5766
+    volumes:
+        - /var/log/coturn_log:/var/log/coturn
+        - /var/log/supervisor_coturn_log:/var/log/supervisor
+

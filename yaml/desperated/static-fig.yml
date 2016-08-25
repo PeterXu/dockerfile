@@ -1,0 +1,13 @@
+static:
+    extends:
+        file: ../base/nginxcgi.yml
+        service: nginxcgi
+    environment:
+        - configNginx=default
+    volumes:
+        #- /opt/static_root/conf:/etc/nginx/sites-enabled
+        - /opt/static_root/log:/var/log/nginx
+          #- /opt/static_root/consul_conf:/etc/consul
+        - /opt/static_root/supervisor_log:/var/log/supervisor
+        - /mnt/nshare/statics:/usr/share/nginx/html
+

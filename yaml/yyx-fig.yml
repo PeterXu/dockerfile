@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  # vote for football/..
+  yyx:
+    image: lark.io/yyx:stable
+    stdin_open: true
+    tty: true
+    ports:
+        - 8085:8085
+    environment:
+        - httpPort=8085

@@ -1,0 +1,4 @@
+check process filebeat matching "/usr/bin/filebeat"
+    start program "/usr/bin/filebeat -c /etc/beats/filebeat.yml"
+    stop program "/usr/bin/pkill filebeat"
+    if cpu usage > 95% for 10 cycles then restart

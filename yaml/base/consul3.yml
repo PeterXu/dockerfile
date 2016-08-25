@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  # from consul
+  #   dig consul_node1.node.consul
+  #   dig consul_node1.service.consul
+  consul:
+    image: lark.io/consul:stable
+    restart: always
+    network_mode: host
+    #ports:
+    #    - 8500
+    #    - 8600/udp
+    volumes:
+        - /opt/consul_root/conf:/consul/config
+        - /opt/consul_root/data:/consul/data
+

@@ -1,0 +1,11 @@
+btsync:
+    extends:
+        file: base/btsync.yml
+        service: btsync
+    net: default
+    ports:
+        - 8888:8888
+        - 55555:55555
+    volumes:
+        - /mnt/share/btsync_data:/mnt/sync
+

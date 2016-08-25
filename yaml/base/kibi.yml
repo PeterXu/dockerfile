@@ -1,0 +1,11 @@
+kibi:
+    image: lark.io/kibi:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    net: host
+    #ports:
+    #    - 5601
+    environment:
+        - ELASTICSEARCH_URL=http://127.0.0.1:9200
+

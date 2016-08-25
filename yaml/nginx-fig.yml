@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  nginx:
+    image: lark.io/nginx:lts
+    restart: always
+    network_mode: default
+    ports:
+        - 80:80
+    volumes:
+        - /opt/nginx_root/log:/var/log/nginx
+    tmpfs:
+        - /run
+        - /tmp
+

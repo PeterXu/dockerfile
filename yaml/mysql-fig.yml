@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  mysql:
+    extends:
+        file: base/mysql.yml
+        service: mysql
+    network_mode: default
+    ports:
+        - 3306:3306
+    volumes:
+        - /mnt/share/mysql_root/conf:/etc/mysql/conf.d
+        - /mnt/share/mysql_root/log:/var/log/mysql
+        - /mnt/share/mysql_root/data:/var/lib/mysql
+
+  phpmyadmin:
+    extends:
+        file: base/phpmyadmin.yml
+        service: phpmyadmin
+    network_mode: default
+    ports:
+        - 8080:8080
+    links:
+        - mysql:dbHost
+    environment:
+        - dbHost=dbHost
+        - listenPort=8080
+

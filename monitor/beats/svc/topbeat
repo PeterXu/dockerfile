@@ -1,0 +1,4 @@
+check process topbeat matching "/usr/bin/topbeat"
+    start program "/usr/bin/topbeat -c /etc/beats/topbeat.yml"
+    stop program "/usr/bin/pkill topbeat"
+    if cpu usage > 95% for 10 cycles then restart

@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+  postgresql_gitlab:
+    extends:
+        file: base/postgresql.yml
+        service: postgresql
+    network_mode: default
+    environment:
+        - DB_USER=gitlab
+        - DB_PASS=password
+        - DB_NAME=gitlabhq_production
+    volumes:
+        - /opt/gitlab_root/pg_log:/var/log/postgresql
+        - /opt/gitlab_root/pg_run:/run/postgresql
+        - /mnt/share/gitlab_data/postgresql:/var/lib/postgresql
+
+  redis_gitlab:
+    extends:
+        file: base/redis.yml
+        service: redis
+    network_mode: default
+    volumes:
+        - /opt/gitlab_root/redis_log:/var/log/redis
+        - /mnt/share/gitlab_data/redis:/var/lib/redis
+
+  gitlab:
+    extends: 
+        file: base/gitlab.yml
+        service: gitlab
+    links:
+        - redis_gitlab:redisio
+        - postgresql_gitlab:postgresql
+    network_mode: default
+    ports:
+        - "10080:80"
+        - "10022:22"
+    environment:
+        - httpHost=192.168.0.252
+        - sshHost=192.168.0.252
+        # pwgen -Bsv1 64
+        - GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alphanumeric-string
+        - GITLAB_HOST=localhost
+        - GITLAB_PORT=10080
+        - GITLAB_SSH_PORT=10022
+    volumes:
+        - /opt/gitlab_root/log:/var/log/gitlab
+        - /mnt/share/gitlab_data/gitdata:/home/git/data
+

@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  # how to do:
+  #  1. run consulsrv1 & consulsr2 & consulsrv3
+  #  2. run 'consul join consulsrv1_ip consulsr2_ip' in consulsrv3
+  # NODE_IP=$(getent hosts $(hostname) | awk '{print $1}')
+  consulsrv:
+    extends: 
+        file: base/consul3.yml
+        service: consul
+    command: >
+        agent -bind ${NODE_IP} -client 0.0.0.0 -data-dir /consul/data -config-dir /consul/config -ui -dc bj_consul -rejoin -server -bootstrap-expect=2
+

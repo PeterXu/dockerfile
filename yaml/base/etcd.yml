@@ -1,0 +1,13 @@
+# from microbox/etcd
+etcd:
+    image: lark.io/etcd:stable
+    hostname: etcd_node1
+    restart: always
+    net: host
+    #ports:
+    #    - 4001
+    #    - 7001
+    command:
+        - -name
+        - discovery
+

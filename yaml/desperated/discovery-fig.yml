@@ -1,0 +1,22 @@
+etcd:
+    extends: 
+        file: base/etcd.yml
+        service: etcd
+    hostname: etcd_node1
+    net: default
+    ports:
+        - 4001:4001
+        - 7001:7001
+
+# config dnsmasq: server=/consul./127.0.0.1#8600
+consul:
+    extends: 
+        file: base/consul.yml
+        service: consul
+    hostname: consul_node1
+    net: default
+    ports:
+        - 8400:8400
+        - 8500:8500  
+        - 8600:53/udp
+

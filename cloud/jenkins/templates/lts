@@ -1,0 +1,42 @@
+FROM lark.io/jenkins:lts
+
+COPY files/executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
+
+USER root
+
+RUN echo "deb http://mirrors.aliyun.com/debian jessie main" > /etc/apt/sources.list
+RUN echo "deb http://mirrors.aliyun.com/debian jessie-updates main" >>/etc/apt/sources.list
+RUN rm -rf /etc/apt/sources.list.d/
+
+RUN apt-get update
+RUN apt-get install -y vim net-tools
+RUN apt-get install -y python-pip
+RUN pip install -U pip
+RUN pip install docker-compose
+
+RUN echo 'deb http://rex.linux-files.org/debian/ jessie rex' >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y --force-yes rex
+RUN apt-get clean
+
+
+ADD apache-ant-1.9.6-bin.tar.gz /usr/local/
+RUN ln -s /usr/local/apache-ant-1.9.6/bin/ant /usr/bin/ant
+ADD apache-maven-3.3.9-bin.tar.gz /usr/local/
+RUN ln -s /usr/local/apache-maven-3.3.9/bin/mvn /usr/bin/mvn
+
+# jcep8
+ADD files/jce_policy-8.zip /root
+RUN unzip /root/jce_policy-8.zip -d /tmp
+RUN cp -f /tmp/UnlimitedJCEPolicyJDK8/*.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/
+RUN rm -rf /tmp/UnlimitedJCEPolicyJDK8
+
+RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+RUN usermod -aG root jenkins
+USER jenkins
+
+#COPY files/nginx.pem /var/lib/jenkins/cert
+#COPY files/nginx.key /var/lib/jenkins/pk
+#ENV JENKINS_OPTS --httpPort=-1 --httpsPort=443 --httpsCertificate=/var/lib/jenkins/cert --httpsPrivateKey=/var/lib/jenkins/pk
+#EXPOSE 80 443

@@ -1,0 +1,20 @@
+openldap:
+    image: lark.io/openldap:lts
+    restart: always
+    #hostname: ldap.io
+    net: host
+    #ports:
+    #    - 389
+    #    - 636
+    #environment:
+        #- LDAP_ORGANISATION=lark
+        #- LDAP_DOMAIN=ldap.io
+        #- LDAP_ADMIN_PASSWORD=pass
+        #- LDAP_TLS=false
+        #- LDAP_TLS_CRT_FILENAME=ldap.crt
+        #- LDAP_TLS_KEY_FILENAME=ldap.key
+        #- LDAP_TLS_CA_CRT_FILENAME=ca.crt
+    volumes:
+        - /opt/slapd_root/data:/var/lib/ldap
+        - /opt/slapd_root/conf:/etc/ldap/slapd.d
+        #-/opt/slapd_root/certs:/container/service/slapd/assets/certs

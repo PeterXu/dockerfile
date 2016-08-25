@@ -1,0 +1,12 @@
+# from sonatype/nexus
+# default: admin/admin123
+# chown -R 200 /var/lib/nexus_data
+mvnsrc:
+    image: lark.io/nexus:lts
+    restart: always
+    net: host
+    #ports:
+    #    - 8081
+    volumes:
+        - /opt/mvnsrc_root/data:/sonatype-work
+

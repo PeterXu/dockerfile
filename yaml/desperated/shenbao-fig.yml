@@ -1,0 +1,37 @@
+mysqlrouter:
+    extends:
+        file: ../base/mysqlrouter.yml
+        service: mysqlrouter
+    environment:
+        - mysqlHosts=10.11.210.111,10.11.210.112
+
+static:
+    extends:
+        file: ../base/nginxcgi.yml
+        service: nginxcgi
+    environment:
+        - configNginx=default
+    volumes:
+        - /opt/static_root/conf:/etc/nginx/sites-enabled
+        - /opt/static_root/log:/var/log/nginx
+        - /opt/static_root/consul_conf:/etc/consul
+        - /opt/static_root/supervisor_log:/var/log/supervisor
+        - /mnt/nshare/statics:/usr/share/nginx/html
+
+soccerda:
+    image: lark.io/soccerda:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    net: host
+    environment:
+        - dbHost=127.0.0.1
+        #- dbPort=3306
+    #links:
+    #   - mysql:db
+    volumes:
+        - /opt/soccerda_root/logs:/usr/local/tomcat/logs
+        - /opt/soccerda_root/conf:/etc/soccerda
+        - /opt/soccerda_root/soccerda_logs:/var/log/soccerda
+        - /mnt/nshare/soccerda:/mnt/nshare/soccerda
+

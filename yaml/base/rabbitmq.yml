@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  # from rabbitmq
+  # rabbitmqctl add_user openstack openstack_passwd
+  # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+  rabbitmq:
+    image: lark.io/rabbitmq:stable
+    restart: always
+    network_mode: host
+    #ports:
+    #    - 25672/tcp
+    #    - 4369/tcp
+    #    - 5671/tcp
+    #    - 5672/tcp
+    volumes:
+        - /opt/rabbitmq_root/data:/var/lib/rabbitmq
+

@@ -1,0 +1,144 @@
+version: '2'
+
+services:
+  mysqlrouter:
+    extends:
+        file: ../base/mysqlrouter.yml
+        service: mysqlrouter
+    network_mode: default
+    #ports: 
+    #    - 3306:3306
+    volumes:
+        - /opt/mysqlrouter_root/log:/var/log/mysqlrouter
+
+  soccerdojo:
+    image: "lark.io/soccerdojo:stable"
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: default
+    ports:
+        - 8080:8080
+    #    - 9191:9191
+    external_links:
+        - huao_mysqlrouter_1:mysql
+    environment:
+        #- DB_HOST=mysql0.uio
+        #- DB_USER=
+        #- DB_PASS=
+        - SOCCERDOJO_UPLOAD_DIRECTORY=/rhome
+    volumes:
+        - /opt/soccerdojo_root/logs:/var/log/soccerdojo
+        - /opt/soccerdojo_root/uwsgi_log:/var/log/uwsgi
+        - /opt/soccerdojo_root/supervisor_log:/var/log/supervisor
+        - /mnt/nshare/dojo:/rhome
+    tmpfs:
+        - /run
+        - /tmp
+
+  portal:
+    image: "lark.io/portal:stable"
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: default
+    ports:
+        - 8081:8080
+    environment:
+        - SERVERIP=dojo0.uio:8080
+    volumes:
+        - /opt/portal_root/logs:/usr/local/tomcat/logs
+        - /mnt/nshare/dojo:/rhome
+    tmpfs:
+        - /run
+        - /tmp
+
+  laurels:
+    image: "lark.io/laurels:stable"
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: default
+    ports:
+        - 8083:8080
+    environment:
+        - SERVERIP=dojo0.uio:8080
+    volumes:
+        - /opt/laurels_root/logs:/usr/local/tomcat/logs
+        - /mnt/nshare/dojo:/rhome
+    tmpfs:
+        - /run
+        - /tmp
+
+
+###=====================================
+
+  soccerda:
+    image: lark.io/soccerda:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: default
+    ports:
+        - 8080:8080
+    #environment:
+        #- dbHost=mysql0.uio
+        #- dbPort=3306
+    external_links:
+        - huao_mysqlrouter_1:db 
+    volumes:
+        - /opt/soccerda_root/logs:/usr/local/tomcat/logs
+        - /opt/soccerda_root/soccerda_logs:/var/log/soccerda
+        - /mnt/nshare/soccerda:/mnt/nshare/soccerda
+    tmpfs:
+        - /run
+        - /tmp
+
+  soccerpro:
+    image: lark.io/soccerpro:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: default
+    ports:
+        - 8085:8080
+    #environment:
+        #- dbHost=mysql0.uio
+        #- dbPort=3306
+        #- JPDA_ADDRESS=0.0.0.0:8000
+        #- XmsMem=256m
+        #- XmxMem=1g
+    external_links:
+        - huao_mysqlrouter_1:db 
+    volumes:
+        - /opt/soccerpro_root/logs:/usr/local/tomcat/logs
+        - /opt/soccerpro_root/soccerpro_logs:/var/log/soccerpro
+        - /mnt/nshare/soccerpro:/mnt/nshare/soccerpro
+    tmpfs:
+        - /run
+        - /tmp
+
+  camp:
+    image: lark.io/camp:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: default
+    ports:
+        - 8084:8080
+    #environment:
+        #- dbHost=mysql0.uio
+        #- dbPort=3306
+        #- JPDA_ADDRESS=0.0.0.0:8000
+        #- XmsMem=256m
+        #- XmxMem=1g
+    external_links:
+        - huao_mysqlrouter_1:db 
+    volumes:
+        - /opt/camp_root/logs:/usr/local/tomcat/logs
+        - /opt/camp_root/camp_logs:/var/log/camp
+        - /mnt/nshare/camp:/mnt/nshare/camp
+    tmpfs:
+        - /run
+        - /tmp
+

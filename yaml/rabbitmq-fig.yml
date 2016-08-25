@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  rabbitmq:
+    extends:
+        file: base/rabbitmq.yml
+        service: rabbitmq
+    network_mode: default
+    ports:
+        - 25672:25672/tcp
+        - 4369:4369/tcp
+        - 5671:5671/tcp
+        - 5672:5672/tcp
+

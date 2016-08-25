@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  dnsmasq:
+    image: lark.io/dnsmasq:alpine
+    restart: always
+    network_mode: host
+    #ports:
+    #    - 53/udp
+    volumes:
+        - /opt/dnsmasq_root/data:/var/lib/dnsmasq_data
+        - /opt/dnsmasq_root/supervisor_log:/var/log/supervisor
+

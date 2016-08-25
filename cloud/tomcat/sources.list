@@ -1,0 +1,2 @@
+deb http://mirrors.aliyun.com/debian jessie main
+deb http://mirrors.aliyun.com/debian jessie-updates main

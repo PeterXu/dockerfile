@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  jenkins:
+    image: lark.io/jenkins:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: host
+    #ports:
+    #    - 8080:8080
+    #    - 50000:50000
+    environment:
+        - JAVA_OPTS=-Duser.timezone=Asia/Shanghai
+    volumes:
+        - /opt/jenkins_root/home:/var/jenkins_home

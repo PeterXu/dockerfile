@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  adserver:
+    image: lark.io/adserver:stable
+    stdin_open: true
+    tty: true
+    network_mode: host
+    environment:
+        - httpPort=8085
+    volumes:
+        - /mnt/share/adserver_root/data:/var/www/html

@@ -1,0 +1,7 @@
+portalpro:
+    extends:
+        file: app.yml
+        service: portalpro
+    environment:
+        - SERVERIP=10.20.230.200:8080
+

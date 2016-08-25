@@ -1,0 +1,24 @@
+# usage: env DB_HOST(net:host) if not use links.
+soccerdojo:
+    image: "lark.io/soccerdojo:stable"
+    restart: always
+    stdin_open: true
+    tty: true
+    net: host
+    #ports:
+    #    - 8080:8080
+    #    - 9191:9191
+    #links:
+    #    - mysqlrouter:mysql
+    environment:
+        - DB_HOST=127.0.0.1
+        - DB_USER=
+        - DB_PASS=
+        - SOCCERDOJO_UPLOAD_DIRECTORY=/mnt/nshare/soccerdojo/upload
+    volumes:
+        - /opt/soccerdojo_root/conf:/etc/soccerdojo
+        - /opt/soccerdojo_root/data:/mnt/nshare/soccerdojo
+        - /opt/soccerdojo_root/uwsgi_conf:/etc/uwsgi/apps-enabled
+        - /opt/soccerdojo_root/uwsgi_log:/var/log/uwsgi
+        - /opt/soccerdojo_root/supervisor_log:/var/log/supervisor
+

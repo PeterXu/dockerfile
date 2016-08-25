@@ -1,0 +1,16 @@
+# SECRET32=$(dd if=/dev/random bs=1 count=32 2>/dev/null | base64 | tr -d '\n')
+# SECRET128=$(dd if=/dev/random bs=1 count=128 2>/dev/null | base64 | tr -d '\n')
+dexauth:
+    image: lark.io/dexauth:stable
+    stdin_open: true
+    tty: true
+    net: host
+    #ports:
+    #    - 5556:5556
+    #    - 5557:5557
+    environment:
+        - DEX_DB_URL=postgres://dex:dex@localhost:5432/dex?sslmode=disable
+        - DEX_KEY_SECRET=swOOQev6eVrPIGU9+86W8pnSqmk3EC/hqegDP9myuYk=
+        - DEX_OVERLORD_KEY_PERIOD=1h
+    
+

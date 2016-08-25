@@ -1,0 +1,13 @@
+zookeeper:
+    image: lark.io/mesoscloud/zookeeper:lts
+    stdin_open: true
+    tty: true
+    restart: always
+    net: host
+    environment:
+        - MYID=1
+        - SERVERS=localhost
+        #- SERVERS=node_ip1,node_ip2,node_ip3,node_ip4
+    volumes:
+        - /opt/zookeeper_root/data:/tmp/zookeeper
+

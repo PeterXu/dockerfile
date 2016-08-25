@@ -1,0 +1,18 @@
+# nopreempt only valid for BACKUP 
+keepalived:
+    image: lark.io/keepalived:stable
+    restart: on-failure
+    privileged: true
+    net: host
+    volumes:
+        - /lib/modules:/lib/modules
+        - /opt/keepalived_root/conf:/etc/keepalived
+    environment:
+        - vrrpId=81
+        - vrrpPass=1234
+        - vrrpState=MASTER          # MASTER/BACKUP
+        - vrrpInt1=eth0
+        - vrrpInt2=eth0
+        - vrrpPri=100               # 100/99
+        - vrrpAddr=192.168.10.1/24 dev eth0
+

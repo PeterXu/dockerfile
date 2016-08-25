@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  # usage: env MYSQL_HOST=, 
+  mysqlrouter:
+    image: "lark.io/mysqlrouter:stable"
+    restart: always
+    tty: true
+    stdin_open: true
+    network_mode: host
+    environment:
+        - mysqlHosts=127.0.0.1
+    #ports:
+    #    - 3306
+    #volumes:
+    #    - /opt/mysqlrouter_root/conf:/etc/mysqlrouter
+    #    - /opt/mysqlrouter_root/supervisor_log:/var/log/supervisor
+    #    - /opt/mysqlrouter_root/log:/var/log/mysqlrouter
+

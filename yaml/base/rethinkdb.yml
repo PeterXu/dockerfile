@@ -1,0 +1,10 @@
+# from shipyard/rethinkdb
+rethinkdb:
+    image: lark.io/rethinkdb:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    net: host
+    volumes:
+        - /opt/rethinkdb_root/data:/data
+

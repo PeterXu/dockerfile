@@ -1,0 +1,32 @@
+keystone:
+    extends:
+        file: base/keystone.yml
+        service: keystone
+    hostname: keystone
+    net: default
+    ports:
+        - 5000:5000 
+        - 35357:35357
+    environment:
+        - OS_TENANT_NAME=admin
+        - OS_USERNAME=admin
+        - OS_PASSWORD=passwd
+        - MYSQL_ROOT_PASSWORD=dbpass
+        - MYSQL_HOST=
+    links:
+        - mysql:mysql
+
+mysql:
+    extends:
+        file: base/mysql.yml
+        service: mysql
+    net: default
+    ports:
+        - 3306:3306
+    environment:
+        - MYSQL_ROOT_PASSWORD=dbpass
+    volumes:
+        - /mnt/share/mysql_root/conf:/etc/mysql/conf.d
+        - /mnt/share/mysql_root/log:/var/log/mysql
+        - /mnt/share/mysql_root/data:/var/lib/mysql
+

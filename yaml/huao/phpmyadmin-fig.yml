@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  phpmyadmin:
+    extends:
+        file: ../base/phpmyadmin.yml
+        service: phpmyadmin
+    network_mode: default
+    ports:
+        - 9090:9090
+    external_links:
+        - huao_mysqlrouter_1:mysql
+    environment:
+        - dbHost=mysql
+        - listenPort=9090
+

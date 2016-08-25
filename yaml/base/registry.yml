@@ -1,0 +1,10 @@
+# from registry
+registry:
+    image: lark.io/registry:2.3
+    restart: always
+    net: host
+    #ports:
+    #    - 5000
+    volumes:
+        - /opt/registry_root/data:/var/lib/registry
+

@@ -1,0 +1,46 @@
+registry:
+    extends:
+        file: base/registry.yml
+        service: registry
+    net: default
+    ports: 
+        - 5001:5000
+    volumes:
+        - /mnt/share/registry_data:/var/lib/registry
+
+aptsrc:
+    extends:
+        file: base/aptsrc.yml
+        service: aptsrc
+    net: default
+    ports: 
+        - 5002:80
+    volumes:
+        - /mnt/share/aptsrc_data:/var/spool/apt-mirror
+
+mvnsrc:
+    extends:
+        file: base/mavensrc.yml
+        service: mvnsrc
+    net: default
+    ports:
+        - 5003:8081
+    volumes:
+        - /mnt/share/nexus_data:/sonatype-work
+
+nginxsrc:
+    image: lark.io/nginxsrc:stable
+    restart: always
+    net: host
+    #ports:
+    #    - 80:80
+    #    - 443:443
+    environment:
+        - registry_host=127.0.0.1:5001
+        - aptsrc_host=127.0.0.1:5002
+        - mvnsrc_host=127.0.0.1:5003
+    volumes:
+        - /opt/nginxsrc_root/conf:/etc/nginx/sites-enabled
+        - /opt/nginxsrc_root/log:/var/log/nginx
+
+

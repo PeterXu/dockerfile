@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  # how to do: consul join consul_server_ip
+  # NODE_IP=$(getent hosts $(hostname) | awk '{print $1}')
+  consulcli:
+    extends: 
+        file: base/consul3.yml
+        service: consul
+    command: >
+        agent -advertise ${NODE_IP} -client 0.0.0.0 -data-dir /consul/data -config-dir /consul/config -ui -dc bj_consul -rejoin
+

@@ -1,0 +1,9 @@
+beats1:
+    extends:
+        file: base/beats.yml
+        service: beats
+    environment:
+        - BEATS=topbeat filebeat
+    volumes:
+        - /var/log:/host/var/log
+        - /opt:/host/opt

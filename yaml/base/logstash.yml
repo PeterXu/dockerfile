@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  logstash:
+    image: lark.io/logstash:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: host
+    volumes:
+        - /opt/logstash_root/conf:/etc/logstash
+        - /opt/logstash_root/logs:/var/log/logstash
+    command:
+        - logstash 
+        - -f 
+        - /etc/logstash/logstash-agent.conf
+

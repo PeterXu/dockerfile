@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  docker-proxy:
+    image: lark.io/ehazlett/docker-proxy:lts
+    restart: always
+    network_mode: default
+    ports:
+        - 2375:2375
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+    command:
+        - -d 
+        - /var/run/docker.sock
+

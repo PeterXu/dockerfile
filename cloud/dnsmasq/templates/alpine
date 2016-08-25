@@ -1,0 +1,21 @@
+FROM lark.io/alpine:lts
+MAINTAINER Peter <peter@uskee.org>
+LABEL "org.uskee.vendor"="ZENVV"
+
+
+RUN apk update
+RUN apk add -u dnsmasq 
+RUN apk add -u supervisor
+RUN apk add -u bash
+
+
+ADD files/supervisord.conf /etc/supervisor.d/supervisord.ini
+ADD files/dnsmasq.conf /etc/dnsmasq.conf
+
+
+ADD docker-entrypoint.sh /entrypoint.sh
+VOLUME ["/var/log/supervisor"]
+VOLUME ["/var/lib/dnsmasq_data"]
+EXPOSE 53
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/usr/bin/supervisord"]

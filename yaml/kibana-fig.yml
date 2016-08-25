@@ -1,0 +1,9 @@
+kibana:
+    extends:
+        file: base/kibana.yml
+        service: kibana
+    environment:
+        - ELASTICSEARCH_URL=http://es0.uio:9200
+        - esUsername=admin
+        - esPassword=pass521
+

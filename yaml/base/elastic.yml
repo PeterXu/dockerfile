@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  # from elasticsearch
+  elasticsearch:
+    image: lark.io/elasticsearch:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: host
+    #ports:
+    #    - 9200
+    #    - 9300
+    # host: _local_/_site_/_global_/_eth0_/_eth1_
+    environment:
+        - clusterName=es-cluster
+        - use_readonlyrest=no
+        - networkBindhost=
+        - networkPublishhost=
+        #- clusterHosts=host1,host2
+        #- XmsMem=1g
+        #- XmxMem=2g
+    volumes:
+        - /opt/elastic_root/logs:/usr/share/elasticsearch/logs
+        - /opt/elastic_root/data:/usr/share/elasticsearch/data
+        #- /opt/elastic_root/conf:/usr/share/elasticsearch/config
+        

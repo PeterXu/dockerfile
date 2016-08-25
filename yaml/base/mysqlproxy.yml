@@ -1,0 +1,17 @@
+mysqlproxy:
+    image: lark.io/mysqlproxy:stable
+    restart: always
+    tty: true
+    stdin_open: true
+    net: host
+    #ports:
+    #    - 3306
+    #    - 4040
+    #    - 4041
+    environment:
+        - OPTIONS=
+        - ADMIN_OPTIONS=--admin-username=admin --admin-password=admin --admin-lua-script=/usr/share/mysql-proxy/admin.lua
+        - PROXY_OPTIONS=-P 0.0.0.0:4040 -s /usr/share/mysql-proxy/rw-splitting.lua
+        - PROXY_BACKEND_OPTIONS=-b 127.0.0.1:3306 # -b ..
+        - PROXY_BACKEND_RO_OPTIONS=-r 127.0.0.1:3307 # -r ..
+

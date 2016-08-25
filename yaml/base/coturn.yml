@@ -1,0 +1,14 @@
+coturn:
+    image: lark.io/coturn:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    net: host
+    #ports:
+    #    - 3478
+    #    - 3479
+    #    - 5766
+    volumes:
+        - /opt/coturn_root/log:/var/log/coturn
+        - /opt/coturn_root/supervisor_log:/var/log/supervisor
+

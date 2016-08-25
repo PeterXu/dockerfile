@@ -1,0 +1,17 @@
+beats:
+    image: lark.io/beats:stable
+    restart: always
+    stdin_open: true
+    tty: true
+    net: host
+    volumes:
+        - /proc:/host/proc:ro
+        - /etc:/host/etc:ro
+        - /opt/beats_root/conf:/etc/beats
+        - /opt/beats_root/monit:/etc/monit/conf.d
+    environment:
+        - BEATS=
+    command:
+        - monit
+        - -I
+

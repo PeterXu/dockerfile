@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  # swarm-agent's join --addr ...
+  # NODE_IP=$(getent hosts $(hostname) | awk '{print $1}')
+  # export DISC=consul://dns.io:8500/swarm
+  swarm-agent:
+    extends:
+        file: base/swarm.yml
+        service: swarm
+    network_mode: host
+    entrypoint:
+    - bash
+    - -xc
+    - >
+        DISC=${DISC} && DISC=$${DISC:-consul://consul0.uio:8500/swarm} &&
+        IFACE=${IFACE} && IFACE=$${IFACE:-eth0} &&
+        NODE_IP=$$(ifconfig $${IFACE} | grep 'inet addr:' | cut -d ':' -f2 |  cut -d ' ' -f1) &&
+        /swarm join --heartbeat "60s" --ttl "180s" --delay "7s" --addr $${NODE_IP}:2375 $${DISC}
+

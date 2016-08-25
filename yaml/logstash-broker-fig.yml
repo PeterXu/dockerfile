@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  logstash-broker:
+    extends: 
+        file: base/logstash.yml
+        service: logstash
+    volumes:
+        - /opt/logstashbk_root/conf:/etc/logstash
+        - /opt/logstashbk_root/logs:/var/log/logstash
+    command:
+        - logstash 
+        - -f 
+        - /etc/logstash/logstash-broker.conf
+

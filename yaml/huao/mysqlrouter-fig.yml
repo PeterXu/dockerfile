@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  mysqlrouter:
+    extends:
+        file: app.yml
+        service: mysqlrouter
+    environment:
+        - TAG=${TAG}
+        - mysqlHosts=
+        - mysqlHosts_BJ=10.20.220.11,10.20.220.12
+        - mysqlHosts_HF=10.11.210.111,10.11.210.112
+

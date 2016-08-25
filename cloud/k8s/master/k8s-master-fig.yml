@@ -1,0 +1,123 @@
+# links: etcd && apiserver
+mesos-master:
+  image: lark.io/mesosphere/mesos:lts
+  net: host
+  #ports: [ "5050:5050" ]
+  entrypoint: [ "mesos-master" ]
+  command: ["--registry=in_memory"]
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+
+
+# links: etcd && mesosmaster
+apiserver:
+  image: lark.io/mesosphere/kubernetes-mesos:lts
+  entrypoint:
+  - /bin/bash
+  - "-ceu"
+  - >
+    echo "Hostname: $$(getent hosts | grep $$(hostname -f) | tail -1)" &&
+    (grep "mesos-master\s*=" /opt/mesos-cloud.conf || echo "  mesos-master = k8s.io:5050" >> /opt/mesos-cloud.conf) &&
+    await-health-check "-t=60" http://dns.io:4001/health &&
+    await-health-check "-t=60" http://k8s.io:5050/health &&
+    await-file "-t=60" /var/run/kubernetes/auth/apiserver.crt &&
+    km apiserver
+    --insecure-bind-address=0.0.0.0
+    --insecure-port=8888
+    --external-hostname=k8s.io
+    --etcd-servers=http://dns.io:4001
+    --admission-control=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota
+    --authorization-mode=AlwaysAllow
+    --token-auth-file=/var/run/kubernetes/auth/token-users
+    --basic-auth-file=/var/run/kubernetes/auth/basic-users
+    --service-account-key-file=/var/run/kubernetes/auth/service-accounts.key
+    --service-cluster-ip-range=10.11.20.0/24
+    --service-node-port-range=30000-32767
+    --cloud-provider=mesos
+    --cloud-config=/opt/mesos-cloud.conf
+    --allow-privileged
+    --tls-cert-file=/var/run/kubernetes/auth/apiserver.crt
+    --tls-private-key-file=/var/run/kubernetes/auth/apiserver.key
+    --runtime-config=experimental/v1alpha1
+    --secure-port=0
+    --v=4
+  net: host
+  #ports: [ "8888:8888", "6443:6443" ]
+  volumes:
+    - /opt/k8s_root/kubernetes/auth:/var/run/kubernetes/auth:ro
+    - /var/run/docker.sock:/var/run/docker.sock
+
+
+# link with mesosmaster && apiserver
+controller:
+  image: lark.io/mesosphere/kubernetes-mesos:lts
+  entrypoint:
+  - /bin/bash
+  - "-ceu"
+  - >
+    echo "Hostname: $$(getent hosts | grep $$(hostname -f) | tail -1)" &&
+    (grep "mesos-master\s*=" /opt/mesos-cloud.conf || echo "  mesos-master = k8s.io:5050" >> /opt/mesos-cloud.conf) &&
+    await-health-check "-t=60" http://k8s.io:5050/health &&
+    await-health-check "-t=180" http://k8s.io:8888/healthz &&
+    km controller-manager
+    --address=$$(getent hosts k8s.io | cut -d' ' -f1 | tail -1)
+    --master=http://k8s.io:8888
+    --cloud-provider=mesos
+    --cloud-config=/opt/mesos-cloud.conf
+    --service-account-private-key-file=/var/run/kubernetes/auth/service-accounts.key
+    --root-ca-file=/var/run/kubernetes/auth/root-ca.crt
+    --v=4
+  volumes:
+    - /opt/k8s_root/kubernetes/auth:/var/run/kubernetes/auth:ro
+    - /var/run/docker.sock:/var/run/docker.sock
+  net: host
+
+
+# links:  etcd && mesosmaster && apiserver
+scheduler:
+  image: lark.io/kubernetes-mesos
+  entrypoint:
+  - /bin/bash
+  - "-ceu"
+  - >
+    echo "Hostname: $$(getent hosts | grep $$(hostname -f) | tail -1)" &&
+    (grep "mesos-master\s*=" /opt/mesos-cloud.conf || echo "  mesos-master = k8s.io:5050" >> /opt/mesos-cloud.conf) &&
+    await-health-check "-t=60" http://dns.io:4001/health &&
+    await-health-check "-t=60" http://k8s.io:5050/health &&
+    await-health-check "-t=180" http://k8s.io:8888/healthz &&
+    km scheduler
+    --address=$$(getent hosts k8s.io | cut -d' ' -f1 | tail -1)
+    --hostname-override=k8s.io
+    --etcd-servers=http://dns.io:4001
+    --mesos-user=root
+    --api-servers=http://k8s.io:8888
+    --mesos-master=k8s.io:5050
+    --allow-privileged
+    --cluster-dns=10.11.40.5
+    --cluster-domain=cluster.local
+    --mesos-executor-cpus=1.0
+    --mesos-sandbox-overlay=/opt/sandbox-overlay.tar.gz
+    --static-pods-config=/opt/static-pods
+    --mesos-framework-roles=*,public
+    --mesos-default-pod-roles=*,public
+    --executor-logv=4
+    --profiling=true
+    --v=4
+  net: host
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./static-pod.json:/opt/static-pods/static-pod.json
+
+
+# link with apiserver
+keygen:
+  image: lark.io/mesosphere/kubernetes-keygen:v1.0.0
+  command:
+    - certgen
+    - /var/run/kubernetes/auth
+    - /var/run/kubernetes/auth
+    - k8s.io
+  volumes:
+    - /opt/k8s_root/kubernetes/auth:/var/run/kubernetes/auth
+  net: host
+

@@ -1,0 +1,13 @@
+statsd:
+    image: lark.io/statsd:stable
+    restart: always
+    net: host
+    #ports:
+    #    - 8125/udp
+    #    - 8126/tcp
+    #links:
+    #    - graphite:graphite
+    environment:
+        - graphiteHost=127.0.0.1
+        - flushInterval=1000
+
