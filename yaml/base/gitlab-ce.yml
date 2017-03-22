@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce
+    restart: always
+    stdin_open: true
+    tty: true
+    network_mode: host
+    hostname: gitlab.genx.io
+    #ports:
+    #    - 80:10080
+    #    - 443:10443
+    #    - 22:10022
+    environment:
+        - GITLAB_OMNIBUS_CONFIG="external_url 'http://gitlab.genx.io/';" 
+    volumes:
+        - /etc/localtime:/etc/localtime
+        - /opt/gitlab/config:/etc/gitlab:Z
+        - /opt/gitlab/logs:/var/log/gitlab:Z
+        - /opt/gitlab/data:/var/opt/gitlab:Z
+
