@@ -7,16 +7,16 @@ services:
     stdin_open: true
     tty: true
     network_mode: host
-    hostname: gitlab.genx.io
+    hostname: git.zenvv.com
     #ports:
     #    - 80:10080
     #    - 443:10443
     #    - 22:10022
     environment:
-        - GITLAB_OMNIBUS_CONFIG="external_url 'http://gitlab.genx.io/';" 
+        - GITLAB_OMNIBUS_CONFIG="external_url 'https://git.zenvv.com/';"
     volumes:
         - /etc/localtime:/etc/localtime
-        - /opt/gitlab/config:/etc/gitlab:Z
-        - /opt/gitlab/logs:/var/log/gitlab:Z
-        - /opt/gitlab/data:/var/opt/gitlab:Z
+        - /opt/etc/gitlab/config:/etc/gitlab:Z
+        - /opt/etc/gitlab/logs:/var/log/gitlab:Z
+        - /opt/etc/gitlab/data:/var/opt/gitlab:Z
 

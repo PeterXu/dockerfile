@@ -5,9 +5,7 @@ services:
     extends:
         file: base/gitlab-ce.yml
         service: gitlab
-    image: gitlab/gitlab-ce:9.0.0-rc7.ce.0
+    image: gitlab/gitlab-ce:latest
     network_mode: default
     ports:
-        - "10080:80"
-        - "10443:443"
-        - "10022:22"
+        - "127.0.0.1:10080:80"
