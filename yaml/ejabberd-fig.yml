@@ -1,0 +1,17 @@
+ejabberd:
+  image: rroemhild/ejabberd
+  ports:
+    - 5222:5222
+    - 5269:5269
+    - 5280:5280
+  environment:
+    - ERLANG_NODE=ejabberd
+    - XMPP_DOMAIN=zenvv.com uskee.org
+    - EJABBERD_ADMINS=admin@zenvv.com
+    - EJABBERD_USERS=admin@zenvv.com:admin@521 test1@zenvv.com:test123 test2@zenvv.com:test123 test3@uskee.org:test123 test4@uskee.org:test123
+    - EJABBERD_GROUPS=group@zenvv.com group@uskee.org
+    - EJABBERD_GROUP_MEMBERS=@all@@zenvv.com:group@zenvv.com @all@@uskee.org:group@uskee.org
+  volumes:
+    - /opt/ejb_root/backup:/opt/ejabberd/backup
+    - /opt/ejb_root/upload:/opt/ejabberd/upload
+    - /opt/ejb_root/database:/opt/ejabberd/database

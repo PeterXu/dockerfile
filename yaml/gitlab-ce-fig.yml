@@ -1,5 +1,6 @@
 version: '2'
 
+# chmod 777 /opt/etc/gitlab/data/gitlab-workhorse
 services:
   gitlab:
     extends:
@@ -7,5 +8,5 @@ services:
         service: gitlab
     image: gitlab/gitlab-ce:latest
     network_mode: default
-    ports:
-        - "127.0.0.1:10080:80"
+    #ports:
+    #    - "127.0.0.1:10080:80"
