@@ -10,7 +10,4 @@ services:
     #    - 8080
     #links:
     #    - mysql:db
-    environment:
-        - dbHost=127.0.0.1
-        - listenPort=8080
 

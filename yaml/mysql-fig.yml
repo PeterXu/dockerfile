@@ -19,10 +19,7 @@ services:
         service: phpmyadmin
     network_mode: default
     ports:
-        - 8088:8080
+        - 8088:80
     links:
-        - mysql:dbHost
-    environment:
-        - dbHost=dbHost
-        - listenPort=8080
+        - mysql:db
 
