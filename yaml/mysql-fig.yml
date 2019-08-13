@@ -9,9 +9,9 @@ services:
     ports:
         - 3306:3306
     volumes:
-        - /mnt/share/mysql_root/conf:/etc/mysql/conf.d
-        - /mnt/share/mysql_root/log:/var/log/mysql
-        - /mnt/share/mysql_root/data:/var/lib/mysql
+        - /opt/share/mysql_root/conf:/etc/mysql/conf.d
+        - /opt/share/mysql_root/log:/var/log/mysql
+        - /opt/share/mysql_root/data:/var/lib/mysql
 
   phpmyadmin:
     extends:
@@ -19,7 +19,7 @@ services:
         service: phpmyadmin
     network_mode: default
     ports:
-        - 8080:8080
+        - 8088:8080
     links:
         - mysql:dbHost
     environment:

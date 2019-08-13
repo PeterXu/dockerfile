@@ -3,7 +3,7 @@ version: '2'
 services:
   # from mysql
   mysql:
-    image: "lark.io/mysql:stable"
+    image: "mysql:5.7"
     restart: always
     network_mode: host # host/default
     #ports:

@@ -3,7 +3,7 @@ version: '2'
 services:
   # from phpmyadmin/phpmyadmin
   phpmyadmin:
-    image: "lark.io/phpmyadmin:stable"
+    image: "phpmyadmin/phpmyadmin"
     restart: always
     network_mode: host # host/default
     #ports:
