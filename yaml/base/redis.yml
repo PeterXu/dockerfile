@@ -3,7 +3,7 @@ version: '2'
 services:
   # from redis
   redis:
-    image: lark.io/redis:lts
+    image: redis
     restart: always
     ports:
         - 6379:6379
