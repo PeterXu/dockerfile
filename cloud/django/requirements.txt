@@ -1,6 +1,6 @@
 pytz
 celery # task queue/aysnc
-django==1.9
+django==1.11.29
 
 
 ## base
