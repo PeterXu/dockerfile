@@ -3,7 +3,7 @@ version: '2'
 services:
   # from redis
   redis:
-    image: redis
+    image: redis:5.0.5
     restart: always
     ports:
         - 6379:6379
