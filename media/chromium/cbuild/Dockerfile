@@ -8,4 +8,10 @@ RUN apt-get install -y neovim
 
 RUN apt-get install -y libc6-i386 lib32gcc1 lib32stdc++6
 
+RUN apt-get install -y lib32z1 lighttpd python-pexpect xvfb x11-utils
+
+RUN apt-get install -y bsdiff
+
+RUN apt-get install -y openjdk-8-jdk
+
 RUN rm -rf /depot_tools
