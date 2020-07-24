@@ -1,4 +1,4 @@
-docker run --name chromium_build --network host \
+docker run --name chromium_build --network default \
     -v ~/Workspace/webrtc-android:/webrtc-android \
-	-v ~/.depot_tools:/depot_tools \
+	-v ~/Workspace/depot_tools_android:/depot_tools \
 	-it -d lark.io/cbuild

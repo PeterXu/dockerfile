@@ -14,4 +14,10 @@ RUN apt-get install -y bsdiff
 
 RUN apt-get install -y openjdk-8-jdk
 
+RUN apt-get install -y net-tools
+
+RUN apt-get install -y iputils-ping
+
+RUN apt-get install -y iproute2
+
 RUN rm -rf /depot_tools
