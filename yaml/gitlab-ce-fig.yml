@@ -6,7 +6,7 @@ services:
     extends:
         file: base/gitlab-ce.yml
         service: gitlab
-    image: gitlab/gitlab-ce:latest
+    image: gitlab/gitlab-ce:11.11.3-ce.0
     network_mode: default
     #ports:
     #    - "127.0.0.1:10080:80"
